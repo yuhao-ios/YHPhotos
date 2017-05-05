@@ -7,13 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import <Photos/Photos.h>
 @interface PhotoListCell : UITableViewCell
 
 
-/**图片视图*/
-@property(nonatomic,strong)UIImageView *photoView;
-/**标题*/
-@property(nonatomic,strong)UILabel *title;
+
+//设置数据
+-(void)getImageForAssetCollection:(PHAssetCollection *)coll;
 
 @end

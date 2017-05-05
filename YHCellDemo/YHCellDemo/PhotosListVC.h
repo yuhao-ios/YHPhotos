@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+typedef void (^PhotoListBlock)(NSMutableArray *imageArray);
 
 @interface PhotosListVC : UIViewController
+
+// 生成一个 block 属性
+@property(nonatomic, copy) PhotoListBlock block;
 
 @end

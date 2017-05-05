@@ -8,9 +8,17 @@
 
 #import "PhotoListCell.h"
 #import <Masonry.h>
+#import "YHPhotosData.h"
+
+@interface PhotoListCell ()
+
+/**图片视图*/
+@property(nonatomic,strong)UIImageView *photoView;
+/**标题*/
+@property(nonatomic,strong)UILabel *title;
 
 
-
+@end
 
 @implementation PhotoListCell
 
@@ -44,7 +52,6 @@
 
     [self addSubview:self.title];
     
-    
     [self.photoView mas_makeConstraints:^(MASConstraintMaker *make) {
        
         make.top.equalTo(self.mas_top).offset(5);
@@ -61,7 +68,25 @@
         make.height.equalTo(self.photoView);
     }];
     
+}
 
 
+
+
+///设置数据
+-(void)getImageForAssetCollection:(PHAssetCollection *)coll{
+    
+    PHAsset *set = [[YHPhotosData getPhotosForPHAssetCollection:coll] lastObject] ;
+                    
+    [[PHImageManager defaultManager]requestImageForAsset:set targetSize:self.photoView.frame.size contentMode:PHImageContentModeAspectFit options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+        if (result == nil) {
+            self.photoView.image = [UIImage imageNamed:@"no_data"];
+        }else {
+            
+            self.photoView.image = result;
+        }
+    }];
+   
+     self.title.text = coll.localizedTitle;
 }
 @end

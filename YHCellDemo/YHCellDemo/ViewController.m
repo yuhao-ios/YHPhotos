@@ -80,14 +80,17 @@
 
     PhotoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     cell.delegate =self;
-    
+
     if (indexPath.row == self.imageArray.count) {
         
         cell.photoView.image = [UIImage imageNamed:@"plus.png"];
         cell.deleteBTn.hidden = YES;
         
     }else{
-        cell.photoView.image = self.imageArray[indexPath.row];
+        
+        
+       cell.photoView.image = self.imageArray[indexPath.row];
+        
         cell.deleteBTn.hidden = NO;
     }
     
@@ -100,9 +103,8 @@
 
     if (self.imageArray.count == indexPath.row) {
         
-        //[self alertViewForPhoto];
-        
-        [self.navigationController pushViewController:[[PhotosListVC alloc]init] animated:YES];
+        [self alertViewForPhoto];
+       
     }
 
 }
@@ -151,12 +153,29 @@
 //打开相册
 -(void)openPhotos{
 
+   /* 
+    打开系统定义的相册
+    
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
         self.picController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     }
   NSMutableArray *array =  [YHPhotosData getAllPhotoListData];
     NSLog(@"%@",array);
   [self presentViewController:self.picController animated:YES completion:nil];
+    
+  */
+    
+    //打开自己定义的相册
+    PhotosListVC *vc = [[PhotosListVC alloc]init];
+    vc.block = ^(NSMutableArray *imageArray){
+        
+        NSLog(@"%@",imageArray);
+        [self.imageArray addObjectsFromArray:imageArray];
+       [self.collectionView reloadData];
+        
+    };
+    [self.navigationController pushViewController:vc animated:YES];
+    
 }
 
 

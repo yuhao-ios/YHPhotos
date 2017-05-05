@@ -10,6 +10,7 @@
 #import <Photos/Photos.h>
 #import "PhotoListCell.h"
 #import "YHPhotosData.h"
+#import "PhotoShowVC.h"
 @interface PhotosListVC ()<UITableViewDelegate,UITableViewDataSource>
 
 @property(nonatomic,strong)UITableView *tableView;
@@ -43,15 +44,7 @@
     return _photoList;
 }
 
-///返回每一个相册最后一张照片资源
--(PHAsset *)getImageForIndexPathRow:(NSInteger)row{
 
-    PHAssetCollection *collection  = self.photoList[row];
-    
-    PHAsset *set = [[YHPhotosData getPhotosForPHAssetCollection:collection] lastObject];
-
-    return set;
-}
 
 
 #pragma mark - UITableViewDataSource
@@ -69,19 +62,7 @@
         cell = [[PhotoListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
     
-   [[PHImageManager defaultManager]requestImageForAsset:[self getImageForIndexPathRow:indexPath.row] targetSize:CGSizeMake(80, 80) contentMode:PHImageContentModeAspectFit options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-       if (result == nil) {
-           cell.photoView.image = [UIImage imageNamed:@"no_data"];
-       }else {
-       
-          cell.photoView.image = result;
-       }
-       
-       PHAssetCollection *coll = self.photoList[indexPath.row];
-       cell.title.text = coll.localizedTitle;
-   }];
-    
-    
+    [cell getImageForAssetCollection:self.photoList[indexPath.row]];
     
     return cell;
 }
@@ -90,5 +71,28 @@
 
     return 90;
 }
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+
+    
+    PhotoShowVC *vc = [[PhotoShowVC alloc]init];
+    
+    vc.coll = self.photoList[indexPath.row];
+    
+    vc.block = ^(NSMutableArray *imageArray){
+    
+        [self.navigationController popViewControllerAnimated:YES];
+        if (self.block) {
+            self.block(imageArray);
+        }
+    
+    };
+    
+    
+    [self.navigationController pushViewController:vc animated:YES];
+
+}
+
+
 
 @end
