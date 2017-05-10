@@ -81,8 +81,9 @@
     
     vc.block = ^(NSMutableArray *imageArray){
     
-        [self.navigationController popViewControllerAnimated:YES];
+        
         if (self.block) {
+            [self.navigationController  popToRootViewControllerAnimated:YES];
             self.block(imageArray);
         }
     

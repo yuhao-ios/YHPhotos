@@ -22,14 +22,10 @@
 
     self = [super initWithFrame:frame];
     
-    
     if (self) {
         
         [self layOutForCell];
     }
-
-
-
     return self;
 }
 

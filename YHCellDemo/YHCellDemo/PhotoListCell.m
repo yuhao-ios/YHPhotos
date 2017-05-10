@@ -40,7 +40,6 @@
 
 }
 
-
 -(void)setLayout {
 
     self.photoView = [[UIImageView alloc]init];
@@ -69,8 +68,6 @@
     }];
     
 }
-
-
 
 
 ///设置数据

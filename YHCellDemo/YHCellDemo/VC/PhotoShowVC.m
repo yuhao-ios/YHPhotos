@@ -66,7 +66,7 @@
     if (self.selectImageArray.count > 0) {
         if (self.block) {
             
-            [self.navigationController popViewControllerAnimated:YES];
+           // [self.navigationController popViewControllerAnimated:YES];
             self.block(self.selectImageArray);
         }
 
@@ -86,7 +86,6 @@
     }else {
     
         NSLog(@"请先选中图片");
-    
     }
     vc.delegate = self;
     

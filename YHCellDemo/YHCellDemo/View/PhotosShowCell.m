@@ -27,7 +27,6 @@
        
         [self layOutUI];
     }
-
     return self;
 
 }
@@ -62,9 +61,6 @@
 
     [[PHImageManager defaultManager]requestImageForAsset:set targetSize:self.photoView.frame.size contentMode:PHImageContentModeAspectFit options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
         
-        
-
-
         if (result) {
             
             // 排除取消，错误，低清图三种情况，即已经获取到了高清图
@@ -82,10 +78,7 @@
             self.photoView.image = [UIImage imageNamed:@"no_data"];
         }
         
-        
     }];
-
-
 
 }
 
